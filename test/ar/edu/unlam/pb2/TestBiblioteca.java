@@ -15,8 +15,8 @@ public class TestBiblioteca {
 		unlam.agregarLibro(historia);
 		unlam.agregarLibro(quimica);
 		
-		assertNotNull(unlam.librosDisponibles.get(1));
-		assertNotNull(unlam.librosDisponibles.get(2));
+		assertNotNull(unlam.getLibrosDisponibles().get(1));
+		assertNotNull(unlam.getLibrosDisponibles().get(2));
 	}
 	
 	@Test
@@ -28,8 +28,8 @@ public class TestBiblioteca {
 		unlam.agregarLibro(programacion);
 		unlam.prestarLibro(claudia, 5);
 		
-		assertNull(unlam.librosDisponibles.get(5));
-		assertEquals(5, claudia.librosEnPosesion.get(5).getCodigo());
+		assertNull(unlam.getLibrosDisponibles().get(5));
+		assertEquals(5, claudia.verLibro(5).getCodigo());
 		
 		
 	}
@@ -40,12 +40,11 @@ public class TestBiblioteca {
 		Biblioteca unlam = new Biblioteca("UNLAM");
 		Persona maxi = new Persona ("Maximiliano", "Aurelio", 420.0);
 		
-		unlam.agregarLibro(3);
+		unlam.agregarLibro(quimica);
 		unlam.venderLibro(3, maxi);
 		
-		assertEquals(3, maxi.librosComprados.get(3).getCodigo());
-		assertEquals(120.0, maxi.getDinero);
-		assertNull(unlam.librosDisponibles.get(3));
+		assertEquals(3, maxi.verLibro(3).getCodigo());
+		assertNull(unlam.getLibrosDisponibles().get(3));
 	}
 	
 	@Test (expected = MasDeDosLibros.class)
@@ -56,17 +55,17 @@ public class TestBiblioteca {
 		Biblioteca unlam = new Biblioteca("UNLAM");
 		Persona nahuel = new Persona("Nahuel", "Mazzeo", 500.0);
 		
-		unlam.agregarLibro(1);
-		unlam.agregarLibro(3);
-		unlam.agregarLibro(4);
+		unlam.agregarLibro(quimica);
+		unlam.agregarLibro(historia);
+		unlam.agregarLibro(programacion);
 		unlam.prestarLibro(nahuel, 1);
 		unlam.prestarLibro(nahuel, 3);
 		unlam.prestarLibro(nahuel, 4);
 		
-		assertEquals(3, nahuel.librosEnPosesion.size);
-		assertNull(unlam.librosDisponibles.get(1));
-		assertNull(unlam.librosDisponibles.get(3));
-		assertNull(unlam.librosDisponibles.get(4));
+		assertEquals(3, nahuel.librosEnPosesion.size());
+		assertNull(unlam.getLibrosDisponibles().get(1));
+		assertNull(unlam.getLibrosDisponibles().get(3));
+		assertNull(unlam.getLibrosDisponibles().get(4));
 	}
 	
 	@Test (expected = LibroInexistente.class)
@@ -77,9 +76,9 @@ public class TestBiblioteca {
 		Persona sergio = new Persona("Sergio", "Mattera", 600.0);
 		
 		
-		unlam.agregarLibro(2);
-		unlam.prestarLibro(2, sergio);
-		unlam.prestarLibro(4, sergio);
+		unlam.agregarLibro(programacion);
+		unlam.prestarLibro(sergio, 2);
+		unlam.prestarLibro(sergio, 4);
 	}
 	
 	@Test (expected = SinDinero.class)
@@ -88,10 +87,10 @@ public class TestBiblioteca {
 		Biblioteca unlam = new Biblioteca ("UNLAM");
 		Persona amelia = new Persona("Amelia", "Pastora", 200.0);
 		
-		unlam.agregarLibro(4);
+		unlam.agregarLibro(historia);
 		unlam.venderLibro(4, amelia);
 		
-		assertNotNull(amelia.librosDisponibles.get(4));
+		assertNotNull(amelia.verLibro(4));
 	}
 	
 
