@@ -5,27 +5,47 @@ import java.util.Set;
 
 public class Persona {
 
-	private double Dinero;
-	public Set <Libro> librosEnPosesion;
+	private Double dinero;
+	private String nombre;
+	private String apellido;
+	private Set <Libro> librosEnPosesion;
 
-	
-
-	public Persona(String string, String string2, double d) {
+	public Persona(String nombre, String apellido, Double dinero) {
 		// TODO Auto-generated constructor stub
+		this.nombre = nombre;
+		this.apellido = apellido;
+		this.dinero = dinero;
 		this.librosEnPosesion = new HashSet <Libro> ();
 	}
 
 	public Libro verLibro(Integer codigo) {
-		// TODO Auto-generated method stub
+		for(Libro actual: librosEnPosesion) {
+			if(actual.getCodigo().equals(codigo)) {
+				return actual;
+			}
+		}
+		
 		return null;
 	}
 
 	public double getDinero() {
-		return Dinero;
+		return dinero;
 	}
 
 	public void setDinero(double dinero) {
-		Dinero = dinero;
+		this.dinero = dinero;
+	}
+
+	public String getNombre() {
+		return nombre;
+	}
+
+	public String getApellido() {
+		return apellido;
+	}
+
+	public Set <Libro> getLibrosEnPosesion() {
+		return librosEnPosesion;
 	}
 
 }
